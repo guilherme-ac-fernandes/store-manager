@@ -14,9 +14,10 @@ const getProductById = rescue(async (req, res, next) => {
   return res.status(code).json(data);
 });
 
-const createProduct = rescue(async (req, res) => {
+const createProduct = rescue(async (req, res, next) => {
   const { name } = req.body;
-  const { code, data } = await ProductService.createProduct(name);
+  const { code, data, message } = await ProductService.createProduct(name);
+  if (message) return next({ code, message });
   return res.status(code).json(data);
 });
 
