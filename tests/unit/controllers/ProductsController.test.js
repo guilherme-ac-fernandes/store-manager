@@ -122,4 +122,63 @@ describe("Testes no ProductsService", () => {
        });
     });
   });
+
+  describe("3. Insere um novo produto ao Banco de Dados", () => {
+    
+    describe("caso de falha", () => {
+      const request = {};
+      const response = {};
+      let next = () => {};
+      const payload = { code: 400, message: '"name" is required' };
+
+      before(async () => {
+        request.body = { name: 'algo' };
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        next = sinon.stub().returns();
+        sinon.stub(ProductsService, "createProduct").resolves(payload);
+      });
+
+      after(async () => ProductsService.createProduct.restore());
+
+      it("é utilizado o next para mandar um erro com code e message", async () => {
+        await ProductsController.createProduct(request, response, next);
+        expect(next.calledWith(payload)).to.be.true;
+      });
+
+    });
+
+    describe("caso de sucesso", () => {
+      const request = {};
+      const response = {};
+      let next = () => {};
+      const payload = {
+        code: 201,
+        data: {
+          id: 1,
+          name: "Escudo do Capitão América",
+        },
+      };
+
+      before(async () => {
+        request.body = { name: "Escudo do Capitão América" };
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        next = sinon.stub().returns();
+        sinon.stub(ProductsService, "createProduct").resolves(payload);
+      });
+
+      after(async () => ProductsService.createProduct.restore());
+
+      it("é chamado o status com o código 201", async () => {
+        await ProductsController.createProduct(request, response, next);
+        expect(response.status.calledWith(payload.code)).to.be.true;
+      });
+
+      it("é retornado um array de produtos", async () => {
+        await ProductsController.createProduct(request, response, next);
+        expect(response.json.calledWith(payload.data)).to.be.true;
+      });
+    });
+  });
 });

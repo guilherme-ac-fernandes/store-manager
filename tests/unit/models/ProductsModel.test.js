@@ -93,5 +93,25 @@ describe("Testes no ProductModel", () => {
       });
     });
   });
+
+  describe("3. Insere um novo produto ao Banco de Dados", () => {
+    describe("caso de sucesso", () => {
+      const payload = [{ insertId: 1 }];
+      const newProduct = "Escudo do Capitão América";
+      before(async () => {
+        sinon.stub(connection, "query").resolves(payload);
+      });
+
+      after(async () => connection.query.restore());
+
+      it("quando o name é válido", async () => {
+        const response = await ProductsModel.createProduct(newProduct);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("id", "name");
+        expect(response.id).to.be.equal(payload[0].insertId);
+        expect(response.name).to.be.equal(newProduct);
+      });
+    });
+  });
   
 });
