@@ -3,6 +3,7 @@ const ProductsController = require('./controllers/ProductsController');
 const Middlewares = require('./middlewares/index');
 
 const app = express();
+app.use(express.json());
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
@@ -11,6 +12,7 @@ app.get('/', (_request, response) => {
 
 app.get('/products', ProductsController.getAllProduct);
 app.get('/products/:id', ProductsController.getProductById);
+app.post('/products', ProductsController.createProduct);
 
 app.use(Middlewares.error);
 

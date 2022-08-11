@@ -14,7 +14,14 @@ const getProductById = rescue(async (req, res, next) => {
   return res.status(code).json(data);
 });
 
+const createProduct = rescue(async (req, res) => {
+  const { name } = req.body;
+  const { code, data } = await ProductService.createProduct(name);
+  return res.status(code).json(data);
+});
+
 module.exports = {
   getAllProduct,
   getProductById,
+  createProduct,
 };
