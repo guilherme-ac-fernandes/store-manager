@@ -1,4 +1,5 @@
 const ProductsModel = require('../models/ProductsModel');
+const { validateName, validateQuantityAndProduct } = require('./validations');
 
 const getAllProduct = async () => {
   const products = await ProductsModel.getAllProduct();
@@ -17,21 +18,28 @@ const getProductById = async (idProduct) => {
 };
 
 const createProduct = async (name) => {
-  if (!name || name.length === 0) {
-    return { code: 400, message: '"name" is required' };
-  }
-  if (name.length < 6) {
-    return {
-      code: 422,
-      message: '"name" length must be at least 5 characters long',
-    };
-  }
+  const validation = validateName(name);
+  if (validation.message) return validation;
   const product = await ProductsModel.createProduct(name);
   return { code: 201, data: product };
+};
+
+const createSaleProduct = async (itemsSold) => {
+  const validation = await validateQuantityAndProduct(itemsSold);
+  if (validation !== undefined) return validation;
+
+  const id = await ProductsModel.createSale();
+  
+  Promise.all(itemsSold.map(async (itemSold) => {
+    await ProductsModel.createSaleProduct(id, itemSold);
+  }));
+  
+  return { code: 201, data: { id, itemsSold } };
 };
 
 module.exports = {
   getAllProduct,
   getProductById,
   createProduct,
+  createSaleProduct,
 };

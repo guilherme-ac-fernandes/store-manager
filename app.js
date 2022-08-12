@@ -13,6 +13,7 @@ app.get('/', (_request, response) => {
 app.get('/products', ProductsController.getAllProduct);
 app.get('/products/:id', ProductsController.getProductById);
 app.post('/products', ProductsController.createProduct);
+app.post('/sales', ProductsController.createSalesProducts);
 
 app.use(Middlewares.error);
 
