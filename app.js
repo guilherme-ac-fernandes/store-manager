@@ -1,5 +1,7 @@
 const express = require('express');
+
 const ProductsController = require('./controllers/ProductsController');
+const SalesController = require('./controllers/SalesController');
 const Middlewares = require('./middlewares/index');
 
 const app = express();
@@ -13,7 +15,7 @@ app.get('/', (_request, response) => {
 app.get('/products', ProductsController.getAllProduct);
 app.get('/products/:id', ProductsController.getProductById);
 app.post('/products', ProductsController.createProduct);
-app.post('/sales', ProductsController.createSalesProducts);
+app.post('/sales', SalesController.createSalesProducts);
 
 app.use(Middlewares.error);
 

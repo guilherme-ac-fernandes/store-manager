@@ -10,6 +10,7 @@ const validateName = (name) => {
       message: '"name" length must be at least 5 characters long',
     };
   }
+  return true;
 };
 
 const validateQuantity = (quantity) => {
