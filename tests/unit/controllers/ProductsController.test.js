@@ -112,13 +112,13 @@ describe("Testes no ProductsService", () => {
        after(async () => ProductsService.getProductById.restore());
 
        it("é chamado o status com o código 200", async () => {
-         await ProductsController.getProductById(request, response, next);
-         expect(response.status.calledWith(payload.code)).to.be.true;
+        await ProductsController.getProductById(request, response, next);
+        expect(response.status.calledWith(payload.code)).to.be.true;
        });
 
        it("é retornado um array de produtos", async () => {
-         await ProductsController.getProductById(request, response, next);
-         expect(response.json.calledWith(payload.data)).to.be.true;
+        await ProductsController.getProductById(request, response, next);
+        expect(response.json.calledWith(payload.data)).to.be.true;
        });
     });
   });

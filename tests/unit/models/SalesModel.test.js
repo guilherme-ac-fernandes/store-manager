@@ -23,7 +23,7 @@ describe("Testes no SalesModel", () => {
     });
   });
 
-  describe("1. Insere relação de venda com produto no Banco de Dados Sales_Products", () => {
+  describe("2. Insere relação de venda com produto no Banco de Dados Sales_Products", () => {
     const payload = { productId: 1, quantity: 12 };
     describe("caso de sucesso", () => {
       before(async () => {
@@ -42,4 +42,105 @@ describe("Testes no SalesModel", () => {
       });
     });
   });
+
+  describe("3. Retorna todos as vendas", () => {
+    describe("caso de falha", () => {
+      before(async () => {
+        const execute = [[]];
+        sinon.stub(connection, "query").resolves(execute);
+      });
+
+      after(async () => connection.query.restore());
+
+      it("retorna null", async () => {
+        const response = await SalesModel.getAllSales();
+        expect(response).to.be.equal(null);
+      });
+    });
+
+    describe("caso de sucesso", () => {
+      before(async () => {
+        const execute = [
+          [
+            {
+              saleId: 1,
+              date: "2021-09-09T04:54:29.000Z",
+              productId: 1,
+              quantity: 2,
+            },
+          ],
+        ];
+        sinon.stub(connection, "query").resolves(execute);
+      });
+
+      after(async () => connection.query.restore());
+
+      it("retorna um array", async () => {
+        const response = await SalesModel.getAllSales();
+        expect(response).to.be.a("array");
+      });
+
+      it("o primeiro elemente tem as chaves presentes no banco de dados", async () => {
+        const response = await SalesModel.getAllSales();
+        expect(response[0]).to.be.not.empty;;
+        expect(response[0]).to.include.all.keys(
+          "saleId",
+          "date",
+          "productId",
+          "quantity"
+        );
+      });
+    });
+  });
+
+  describe("4. Retorna todos as vendas especificando o id", () => {
+    describe("caso de falha", () => {
+      before(async () => {
+        const execute = [[]];
+        sinon.stub(connection, "query").resolves(execute);
+      });
+
+      after(async () => connection.query.restore());
+
+      it("retorna null", async () => {
+        const response = await SalesModel.getSalesById(1);
+        expect(response).to.be.equal(null);
+      });
+    });
+
+    describe("caso de sucesso", () => {
+      before(async () => {
+        const execute = [
+          [
+            {
+              saleId: 1,
+              date: "2021-09-09T04:54:29.000Z",
+              productId: 1,
+              quantity: 2,
+            },
+          ],
+        ];
+        sinon.stub(connection, "query").resolves(execute);
+      });
+
+      after(async () => connection.query.restore());
+
+      it("retorna um array", async () => {
+        const response = await SalesModel.getSalesById(1);
+        expect(response).to.be.a("array");
+      });
+
+      it("o primeiro elemente tem as chaves presentes no banco de dados", async () => {
+        const response = await SalesModel.getSalesById(1);
+        expect(response[0]).to.be.not.empty;
+        expect(response[0]).to.include.all.keys(
+          "saleId",
+          "date",
+          "productId",
+          "quantity"
+        );
+      });
+    });
+  });
+
 });

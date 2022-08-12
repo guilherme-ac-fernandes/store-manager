@@ -11,7 +11,7 @@ describe("Testes no ProductsService", () => {
       before(async () => {
         sinon.stub(ProductsModel, "getAllProduct").resolves(null);
       });
-
+      
       after(async () => ProductsModel.getAllProduct.restore());
 
       it("retorna um objeto com as chaves code e message", async () => {
