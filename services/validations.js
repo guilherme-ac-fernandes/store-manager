@@ -55,5 +55,6 @@ const validateQuantityAndProduct = async (itemsSold) => Promise
 
 module.exports = {
   validateName,
+  validateIfProductExists,
   validateQuantityAndProduct,
 };

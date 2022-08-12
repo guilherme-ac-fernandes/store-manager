@@ -23,7 +23,8 @@ const getAllSales = async () => {
       quantity 
     FROM StoreManager.sales_products as sp
     JOIN StoreManager.sales as s
-    ON sp.sale_id = s.id;
+    ON sp.sale_id = s.id
+    ORDER BY saleId, productId;
   `;
   const [sales] = await connection.query(query);
   if (sales.length === 0) return null;

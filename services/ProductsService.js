@@ -1,5 +1,8 @@
 const ProductsModel = require('../models/ProductsModel');
-const { validateName } = require('./validations');
+const {
+  validateName,
+  validateIfProductExists,
+} = require('./validations');
 
 const getAllProduct = async () => {
   const products = await ProductsModel.getAllProduct();
@@ -24,8 +27,21 @@ const createProduct = async (name) => {
   return { code: 201, data: product };
 };
 
+const updateProduct = async (idProduct, name) => {
+  const validationId = await validateIfProductExists(idProduct);
+  if (validationId !== true) return validationId;
+  const validationName = validateName(name);
+  if (validationName !== true) return validationName;
+  await ProductsModel.updateProduct(idProduct, name);
+  return {
+    code: 200,
+    data: { id: idProduct, name },
+  };
+};
+
 module.exports = {
   getAllProduct,
   getProductById,
   createProduct,
+  updateProduct,
 };
