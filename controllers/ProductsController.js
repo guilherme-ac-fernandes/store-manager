@@ -21,15 +21,8 @@ const createProduct = rescue(async (req, res, next) => {
   return res.status(code).json(data);
 });
 
-const createSalesProducts = rescue(async (req, res, next) => {
-  const { code, data, message } = await ProductService.createSaleProduct(req.body);
-  if (message) return next({ code, message });
-  return res.status(code).json(data);
-});
-
 module.exports = {
   getAllProduct,
   getProductById,
   createProduct,
-  createSalesProducts,
 };

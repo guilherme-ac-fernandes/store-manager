@@ -1,7 +1,7 @@
 const rescue = require('express-rescue');
 const SalesService = require('../services/SalesService');
 
-const createSalesProducts = rescue(async (req, res, next) => {
+const createSaleProduct = rescue(async (req, res, next) => {
   const { code, data, message } = await SalesService.createSaleProduct(
     req.body,
   );
@@ -10,5 +10,5 @@ const createSalesProducts = rescue(async (req, res, next) => {
 });
 
 module.exports = {
-  createSalesProducts,
+  createSaleProduct,
 };
