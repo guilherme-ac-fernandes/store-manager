@@ -35,11 +35,11 @@ const updateProduct = async (idProduct, name) => {
     SET name = ?
     WHERE id = ?;
   `;
-  const [{ affectedRows, warningStatus }] = await connection.query(query, [
+  const [{ affectedRows }] = await connection.query(query, [
     name,
     idProduct,
   ]);
-  return { affectedRows, warningStatus };
+  return { affectedRows };
 };
 
 module.exports = {

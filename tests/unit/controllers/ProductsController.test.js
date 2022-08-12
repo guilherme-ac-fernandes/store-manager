@@ -181,4 +181,59 @@ describe("Testes no ProductsService", () => {
       });
     });
   });
+
+  describe("4. Atualiza o nome de um produto", () => {
+    describe("caso de falha", () => {
+      const request = {};
+      const response = {};
+      let next = () => {};
+      const payload = { code: 404, message: "Product not found" };
+
+      before(async () => {
+        request.params = { id: 1 };
+        request.body = { name: "" };
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        next = sinon.stub().returns();
+        sinon.stub(ProductsService, "updateProduct").resolves(payload);
+      });
+
+      after(async () => ProductsService.updateProduct.restore());
+
+      it("é utilizado o next para mandar um erro com code e message", async () => {
+        await ProductsController.updateProduct(request, response, next);
+        expect(next.calledWith(payload)).to.be.true;
+      });
+    });
+    describe("caso de sucesso", () => {
+      const request = {};
+      const response = {};
+      let next = () => {};
+      const payload = {
+        code: 200,
+        data: { id: 1, name: "Capacete do Mandaloriano" },
+      };
+
+      before(async () => {
+        request.params = { id: 1 };
+        request.body = { name: "Capacete do Mandaloriano" };
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        next = sinon.stub().returns();
+        sinon.stub(ProductsService, "updateProduct").resolves(payload);
+      });
+
+      after(async () => ProductsService.updateProduct.restore());
+
+      it("é chamado o status com o código 200", async () => {
+        await ProductsController.updateProduct(request, response, next);
+        expect(response.status.calledWith(payload.code)).to.be.true;
+      });
+
+      it("é retornado um objeto com os dados atualizados", async () => {
+        await ProductsController.updateProduct(request, response, next);
+        expect(response.json.calledWith(payload.data)).to.be.true;
+      });
+    });
+  });
 });

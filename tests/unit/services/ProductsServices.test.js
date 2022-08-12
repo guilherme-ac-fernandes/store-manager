@@ -135,4 +135,77 @@ describe("Testes no ProductsService", () => {
     });
   });
 
+  describe("3. Atualiza o nome de um produto", () => {
+    describe("caso de falha", () => {
+      const newNameProduct = "Capacete do Mandaloriano";
+      const invalidNameProduct = "";
+      const shortNameProduct = "Anel";
+      before(async () => {
+        sinon.stub(ProductsModel, "getProductById")
+          .onFirstCall().resolves(null)
+          .onCall().resolves(true);
+      });
+
+      after(async () => ProductsModel.getProductById.restore());
+
+      it("produto não existe => retorna um objeto com as chaves code e message", async () => {
+        const response = await ProductsService.updateProduct(1, newNameProduct);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "message");
+        expect(response.code).to.be.equal(404);
+        expect(response.message).to.be.equal("Product not found");
+      });
+
+      it("nome inválido => retorna um objeto com as chaves code e message", async () => {
+        const response = await ProductsService.updateProduct(
+          1,
+          invalidNameProduct
+        );
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "message");
+        expect(response.code).to.be.equal(400);
+        expect(response.message).to.be.equal('"name" is required');
+      });
+
+      it("nome inválido => retorna um objeto com as chaves code e message", async () => {
+        const response = await ProductsService.updateProduct(
+          1,
+          shortNameProduct
+        );
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "message");
+        expect(response.code).to.be.equal(422);
+        expect(response.message).to.be.equal(
+          '"name" length must be at least 5 characters long'
+        );
+      });
+    });
+    describe("caso de sucesso", () => {
+      const newNameProduct = "Capacete do Mandaloriano";
+      const payload = {
+        code: 200,
+        data: { id: 1, name: newNameProduct },
+      };
+
+      before(async () => {
+        sinon.stub(ProductsModel, "getProductById").resolves(true);
+        sinon.stub(ProductsModel, "updateProduct").resolves({});
+      });
+
+      after(async () => {
+        ProductsModel.getProductById.restore();
+        ProductsModel.updateProduct.restore();
+      });
+
+      it("o produto é atualizado", async () => {
+        const response = await ProductsService.updateProduct(1, newNameProduct);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "data");
+        expect(response.code).to.be.equal(payload.code);
+        expect(response.data.id).to.be.equal(1);
+        expect(response.data.name).to.be.equal(newNameProduct);
+      });
+    });
+  });
+
 });
