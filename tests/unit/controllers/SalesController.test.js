@@ -234,4 +234,68 @@ describe("Testes no SalesController", () => {
       });
     });
   });
+
+   describe("6. Atualiza uma venda", () => {
+     describe("caso de falha", () => {
+       const request = {};
+       const response = {};
+       let next = () => {};
+       const payload = { code: 404, message: "Sale not found" };
+
+       before(async () => {
+         request.params = { id: 1 };
+         request.body = [{ productId: 999, quantity: 28 }];
+         response.status = sinon.stub().returns(response);
+         response.json = sinon.stub().returns();
+         next = sinon.stub().returns();
+         sinon.stub(SalesService, "updateSales").resolves(payload);
+       });
+
+       after(async () => SalesService.updateSales.restore());
+
+       it("é utilizado o next para mandar um erro com code e message", async () => {
+         await SalesController.updateSales(request, response, next);
+         expect(next.calledWith(payload)).to.be.true;
+       });
+     });
+
+     describe("caso de sucesso", () => {
+       const request = {};
+       const response = {};
+       let next = () => {};
+       const payload = {
+         code: 200,
+         data: {
+           saleId: 1,
+           itemsUpdated: [
+            {
+              productId: 1,
+              quantity: 28,
+            },
+           ],
+         },
+       };
+
+      before(async () => {
+        request.params = { id: 1 };
+        request.body = [{ productId: 1, quantity: 28 }];
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        next = sinon.stub().returns();
+        sinon.stub(SalesService, "updateSales").resolves(payload);
+      });
+
+      after(async () => SalesService.updateSales.restore());
+
+      it("é chamado o status com o código 200", async () => {
+        await SalesController.updateSales(request, response, next);
+        expect(response.status.calledWith(payload.code)).to.be.true;
+      });
+
+      it("é retornado um array com as informações atualizadas", async () => {
+        await SalesController.updateSales(request, response, next);
+        expect(response.json.calledWith(payload.data)).to.be.true;
+      });
+     });
+   });
 });

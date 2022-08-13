@@ -193,7 +193,6 @@ describe("Testes no SalesService", () => {
 
       it("produto não existe => retorna um objeto com as chaves code e message", async () => {
         const response = await SalesService.deleteSales(1);
-        console.log(response);
         expect(response).to.be.a("object");
         expect(response).to.include.all.keys("code", "message");
         expect(response.code).to.be.equal(404);
@@ -222,6 +221,76 @@ describe("Testes no SalesService", () => {
         expect(response).to.include.all.keys("code", "data");
         expect(response.code).to.be.equal(payload.code);
         expect(response.data.id).to.be.equal(1);
+      });
+    });
+  });
+
+  describe("5. Atualiza uma venda", () => {
+    describe("caso de falha", () => {
+      before(async () => {
+        sinon.stub(SalesModel, "getSalesById")
+          .onFirstCall().resolves(null)
+          .onCall().resolves(true);
+      });
+
+      after(async () => SalesModel.getSalesById.restore());
+
+      it("produto não existe => retorna um objeto com as chaves code e message", async () => {
+        const response = await SalesService.updateSales(999, [{ productId: 1, quantity: 2 }]);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "message");
+        expect(response.code).to.be.equal(404);
+        expect(response.message).to.be.equal("Sale not found");
+      });
+
+      it("quantidade invalida => retorna um objeto com as chaves code e message", async () => {
+        const response = await SalesService.updateSales(2, [{ productId: 1 }]);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "message");
+        expect(response.code).to.be.equal(400);
+        expect(response.message).to.be.equal('"quantity" is required');
+      });
+
+      it("productId invalida => retorna um objeto com as chaves code e message", async () => {
+        const response = await SalesService.updateSales(2, [{ quantity: 1 }]);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "message");
+        expect(response.code).to.be.equal(400);
+        expect(response.message).to.be.equal('"productId" is required');
+      });
+    });
+
+    describe("caso de sucesso", () => {
+      const payload = {
+        code: 200,
+        data: {
+          saleId: 5,
+          itemsUpdated: [
+            {
+              productId: 1,
+              quantity: 28,
+            },
+          ],
+        },
+      };
+      before(async () => {
+        sinon.stub(SalesModel, "getSalesById").resolves(true);
+        sinon.stub(SalesModel, "updateSales").resolves({});
+      });
+
+      after(async () => {
+        SalesModel.getSalesById.restore();
+        SalesModel.updateSales.restore();
+      });
+
+      it("o produto é deletado", async () => {
+        const response = await SalesService.updateSales(5, [
+          { productId: 1, quantity: 28 },
+        ]);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "data");
+        expect(response.code).to.be.equal(payload.code);
+        expect(response.data.saleId).to.be.equal(5);
       });
     });
   });

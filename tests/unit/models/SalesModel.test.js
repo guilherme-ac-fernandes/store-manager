@@ -161,4 +161,22 @@ describe("Testes no SalesModel", () => {
     });
   });
 
+  describe("6. Atualiza uma venda", () => {
+    describe("caso de sucesso", () => {
+      const payload = [{ affectedRows: 1 }];
+      before(async () => {
+        sinon.stub(connection, "query").resolves(payload);
+      });
+
+      after(async () => connection.query.restore());
+
+      it("atualiza dado retornando objeto com affectedRows", async () => {
+        const response = await SalesModel.updateSales(1);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("affectedRows");
+        expect(response.affectedRows).to.be.equal(1);
+      });
+    });
+  });
+
 });
