@@ -24,6 +24,7 @@ app.get('/sales', SalesController.getAllSales);
 app.get('/sales/:id', SalesController.getSalesById);
 app.post('/sales', SalesController.createSaleProduct);
 app.delete('/sales/:id', SalesController.deleteSales);
+app.put('/sales/:id', SalesController.updateSales);
 
 // Middleware de Erro Genérico
 app.use(Middlewares.error);

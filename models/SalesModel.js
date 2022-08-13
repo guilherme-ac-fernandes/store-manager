@@ -52,10 +52,27 @@ const deleteSales = async (idSale) => {
   return { affectedRows };
 };
 
+const updateSales = async (idSale, quantity, productId) => {
+  const query = `
+    UPDATE StoreManager.sales_products AS sp
+    JOIN StoreManager.sales AS s
+    ON sp.sale_id = s.id
+    SET quantity = ?
+    WHERE s.id = ? AND product_id = ?;
+  `;
+  const [{ affectedRows }] = await connection.query(query, [
+    quantity,
+    idSale,
+    productId,
+  ]);
+  return { affectedRows };
+};
+
 module.exports = {
   createSale,
   createSaleProduct,
   getAllSales,
   getSalesById,
   deleteSales,
+  updateSales,
 };
