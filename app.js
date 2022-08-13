@@ -12,16 +12,19 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
+// Rotas de Produtos
 app.get('/products', ProductsController.getAllProduct);
 app.get('/products/:id', ProductsController.getProductById);
 app.post('/products', ProductsController.createProduct);
 app.put('/products/:id', ProductsController.updateProduct);
 app.delete('/products/:id', ProductsController.deleteProduct);
 
+// Rotas de Vendas
 app.get('/sales', SalesController.getAllSales);
 app.get('/sales/:id', SalesController.getSalesById);
 app.post('/sales', SalesController.createSaleProduct);
 
+// Middleware de Erro Genérico
 app.use(Middlewares.error);
 
 // não remova essa exportação, é para o avaliador funcionar

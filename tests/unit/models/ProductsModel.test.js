@@ -132,5 +132,23 @@ describe("Testes no ProductModel", () => {
       });
     });
   });
+
+  describe("5. Deleta um produto", () => {
+    describe("caso de sucesso", () => {
+      const payload = [{ affectedRows: 1 }];
+      before(async () => {
+        sinon.stub(connection, "query").resolves(payload);
+      });
+
+      after(async () => connection.query.restore());
+
+      it("altera dado retornando objeto com affectedRows", async () => {
+        const response = await ProductsModel.deleteProduct(1);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("affectedRows");
+        expect(response.affectedRows).to.be.equal(1);
+      });
+    });
+  });
   
 });

@@ -208,4 +208,46 @@ describe("Testes no ProductsService", () => {
     });
   });
 
+  describe("4. Deleta um produto", () => {
+    describe("caso de falha", () => {
+      before(async () => {
+        sinon.stub(ProductsModel, "getProductById").resolves(null);
+      });
+
+      after(async () => ProductsModel.getProductById.restore());
+
+      it("produto não existe => retorna um objeto com as chaves code e message", async () => {
+        const response = await ProductsService.deleteProduct(1);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "message");
+        expect(response.code).to.be.equal(404);
+        expect(response.message).to.be.equal("Product not found");
+      });
+    });
+
+    describe("caso de sucesso", () => {
+      const payload = {
+        code: 204,
+        data: { id: 1 },
+      };
+      before(async () => {
+        sinon.stub(ProductsModel, "getProductById").resolves(true);
+        sinon.stub(ProductsModel, "deleteProduct").resolves({});
+      });
+
+      after(async () => {
+        ProductsModel.getProductById.restore();
+        ProductsModel.deleteProduct.restore();
+      });
+
+      it("o produto é deletado", async () => {
+        const response = await ProductsService.deleteProduct(1);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "data");
+        expect(response.code).to.be.equal(payload.code);
+        expect(response.data.id).to.be.equal(1);
+      });
+    });
+  });
+
 });
