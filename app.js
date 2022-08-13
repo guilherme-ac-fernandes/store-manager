@@ -14,6 +14,7 @@ app.get('/', (_request, response) => {
 
 // Rotas de Produtos
 app.get('/products', ProductsController.getAllProduct);
+app.get('/products/search', ProductsController.searchProducts);
 app.get('/products/:id', ProductsController.getProductById);
 app.post('/products', ProductsController.createProduct);
 app.put('/products/:id', ProductsController.updateProduct);

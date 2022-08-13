@@ -36,10 +36,18 @@ const deleteProduct = rescue(async (req, res, next) => {
   return res.status(code).end();
 });
 
+const searchProducts = rescue(async (req, res, next) => {
+  const { q: search } = req.query;
+  const { code, message, data } = await ProductService.searchProducts(search);
+  if (message) return next({ code, message });
+  return res.status(code).json(data);
+});
+
 module.exports = {
   getAllProduct,
   getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProducts,
 };
