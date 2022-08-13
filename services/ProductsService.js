@@ -39,9 +39,20 @@ const updateProduct = async (idProduct, name) => {
   };
 };
 
+const deleteProduct = async (idProduct) => {
+  const validation = await validateIfProductExists(idProduct);
+  if (validation !== true) return validation;
+  await ProductsModel.deleteProduct(idProduct);
+  return {
+    code: 204,
+    data: { id: idProduct },
+  };
+};
+
 module.exports = {
   getAllProduct,
   getProductById,
   createProduct,
   updateProduct,
+  deleteProduct,
 };
