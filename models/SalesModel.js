@@ -52,6 +52,8 @@ const deleteSales = async (idSale) => {
   return { affectedRows };
 };
 
+// Aplicação de UPDATE associado com JOIN baseada no código presente no StackOverFlow
+// source: https://stackoverflow.com/questions/8057565/mysql-update-inner-join-tables-query
 const updateSales = async (idSale, quantity, productId) => {
   const query = `
     UPDATE StoreManager.sales_products AS sp
