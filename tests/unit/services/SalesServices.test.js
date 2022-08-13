@@ -186,13 +186,14 @@ describe("Testes no SalesService", () => {
   describe("4. Deleta uma venda", () => {
     describe("caso de falha", () => {
       before(async () => {
-        sinon.stub(SalesService, "getSalesById").resolves(null);
+        sinon.stub(SalesModel, "getSalesById").resolves(null);
       });
 
-      after(async () => SalesService.getSalesById.restore());
+      after(async () => SalesModel.getSalesById.restore());
 
       it("produto não existe => retorna um objeto com as chaves code e message", async () => {
         const response = await SalesService.deleteSales(1);
+        console.log(response);
         expect(response).to.be.a("object");
         expect(response).to.include.all.keys("code", "message");
         expect(response.code).to.be.equal(404);
