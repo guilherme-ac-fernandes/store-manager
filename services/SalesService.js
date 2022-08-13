@@ -52,11 +52,9 @@ const updateSales = async (saleId, itemsUpdated) => {
   const validation = await validateQuantityAndProduct(itemsUpdated);
   if (validation !== undefined) return validation;
 
-  Promise.all(
-    itemsUpdated.map(async ({ quantity, productId }) => {
-      await SalesModel.updateSales(saleId, quantity, productId);
-    })
-  );
+  Promise.all(itemsUpdated.map(async ({ quantity, productId }) => {
+    await SalesModel.updateSales(saleId, quantity, productId);
+  }));
 
   return { code: 200, data: { saleId, itemsUpdated } };
 };
