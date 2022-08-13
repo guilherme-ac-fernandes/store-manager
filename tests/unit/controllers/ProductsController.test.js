@@ -286,5 +286,65 @@ describe("Testes no ProductsService", () => {
 
     });
   });
+
+  describe("6. Retorna os produtos referente a string informada", () => {
+
+    describe("caso de falha", () => {
+      const request = {};
+      const response = {};
+      let next = () => {};
+      const payload = { code: 404, message: "Product not found" };
+
+      before(async () => {
+        request.query = { q: "ABCDEFGHIJ" };
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        next = sinon.stub().returns();
+        sinon.stub(ProductsService, "searchProducts").resolves(payload);
+      });
+
+      after(async () => ProductsService.searchProducts.restore());
+
+      it("é utilizado o next para mandar um erro com code e message", async () => {
+        await ProductsController.searchProducts(request, response, next);
+        expect(next.calledWith(payload)).to.be.true;
+      });
+    });
+
+    describe("caso de sucesso", () => {
+      const request = {};
+      const response = {};
+      let next = () => {};
+      const payload = {
+        code: 200,
+        data: [
+          {
+            id: 1,
+            name: "Martelo de Thor",
+          },
+        ],
+      };
+
+      before(async () => {
+        request.query = { q: "Martelo" };
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        next = sinon.stub().returns();
+        sinon.stub(ProductsService, "searchProducts").resolves(payload);
+      });
+
+      after(async () => ProductsService.searchProducts.restore());
+
+      it("é chamado o status com o código 200", async () => {
+        await ProductsController.searchProducts(request, response, next);
+        expect(response.status.calledWith(payload.code)).to.be.true;
+      });
+
+      it('é retornado um array de produtos', async () => {
+        await ProductsController.searchProducts(request, response, next);
+        expect(response.json.calledWith(payload.data)).to.be.true;
+      });
+    });
+  });
   
 });
