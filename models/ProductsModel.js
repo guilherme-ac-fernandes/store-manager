@@ -43,7 +43,7 @@ const updateProduct = async (idProduct, name) => {
 };
 
 const deleteProduct = async (idProduct) => {
-   const query = `
+  const query = `
     DELETE FROM StoreManager.products
     WHERE id = ?;
   `;

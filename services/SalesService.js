@@ -1,5 +1,8 @@
 const SalesModel = require('../models/SalesModel');
-const { validateQuantityAndProduct } = require('./validations');
+const {
+  validateQuantityAndProduct,
+  validateIfSaleExists,
+} = require('./validations');
 
 const createSaleProduct = async (itemsSold) => {
   const validation = await validateQuantityAndProduct(itemsSold);
@@ -32,8 +35,19 @@ const getSalesById = async (idSale) => {
   return { code: 200, data: sales };
 };
 
+const deleteSales = async (idSale) => {
+  const validation = await validateIfSaleExists(idSale);
+  if (validation !== true) return validation;
+  await SalesModel.deleteSales(idSale);
+  return {
+    code: 204,
+    data: { id: idSale },
+  };
+};
+
 module.exports = {
   createSaleProduct,
   getAllSales,
   getSalesById,
+  deleteSales,
 };

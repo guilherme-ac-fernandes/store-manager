@@ -1,4 +1,5 @@
 const ProductsModel = require('../models/ProductsModel');
+const SalesModel = require('../models/SalesModel');
 
 const validateName = (name) => {
   if (!name || name.length === 0) {
@@ -39,6 +40,12 @@ const validateIfProductExists = async (productId) => {
   return true;
 };
 
+const validateIfSaleExists = async (saleId) => {
+  const product = await SalesModel.getSalesById(saleId);
+  if (product === null) return { code: 404, message: 'Sale not found' };
+  return true;
+};
+
 // Aplicação de Promise.all para tratamento de array e assincronidade proveniente do
 // 30secondsodcode e do StackOverFlow
 // source1: https://www.30secondsofcode.org/articles/s/javascript-async-array-loops
@@ -57,4 +64,5 @@ module.exports = {
   validateName,
   validateIfProductExists,
   validateQuantityAndProduct,
+  validateIfSaleExists,
 };

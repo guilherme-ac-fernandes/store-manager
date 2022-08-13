@@ -22,8 +22,16 @@ const getSalesById = rescue(async (req, res, next) => {
   return res.status(code).json(data);
 });
 
+const deleteSales = rescue(async (req, res, next) => {
+  const { id } = req.params;
+  const { code, message } = await SalesService.deleteSales(id);
+  if (message) return next({ code, message });
+  return res.status(code).end();
+});
+
 module.exports = {
   createSaleProduct,
   getAllSales,
   getSalesById,
+  deleteSales,
 };
