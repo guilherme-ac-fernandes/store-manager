@@ -283,7 +283,7 @@ describe("Testes no SalesService", () => {
         SalesModel.updateSales.restore();
       });
 
-      it("o produto é deletado", async () => {
+      it("o produto é atualizado", async () => {
         const response = await SalesService.updateSales(5, [
           { productId: 1, quantity: 28 },
         ]);

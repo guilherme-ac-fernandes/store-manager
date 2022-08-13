@@ -167,7 +167,7 @@ describe("Testes no ProductsService", () => {
         expect(response.message).to.be.equal('"name" is required');
       });
 
-      it("nome inválido => retorna um objeto com as chaves code e message", async () => {
+      it("nome com menos 6 caracteres => retorna um objeto com as chaves code e message", async () => {
         const response = await ProductsService.updateProduct(
           1,
           shortNameProduct
@@ -240,7 +240,7 @@ describe("Testes no ProductsService", () => {
         ProductsModel.deleteProduct.restore();
       });
 
-      it("o produto é atualizado", async () => {
+      it("o produto é deletado", async () => {
         const response = await ProductsService.deleteProduct(1);
         expect(response).to.be.a("object");
         expect(response).to.include.all.keys("code", "data");
