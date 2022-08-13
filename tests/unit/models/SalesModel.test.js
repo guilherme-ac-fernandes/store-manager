@@ -143,4 +143,22 @@ describe("Testes no SalesModel", () => {
     });
   });
 
+  describe("5. Deleta uma venda", () => {
+    describe("caso de sucesso", () => {
+      const payload = [{ affectedRows: 1 }];
+      before(async () => {
+        sinon.stub(connection, "query").resolves(payload);
+      });
+
+      after(async () => connection.query.restore());
+
+      it("deleta dado retornando objeto com affectedRows", async () => {
+        const response = await SalesModel.deleteSales(1);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("affectedRows");
+        expect(response.affectedRows).to.be.equal(1);
+      });
+    });
+  });
+
 });

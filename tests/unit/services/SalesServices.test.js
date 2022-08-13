@@ -182,5 +182,47 @@ describe("Testes no SalesService", () => {
       });
     });
   });
+
+  describe("4. Deleta uma venda", () => {
+    describe("caso de falha", () => {
+      before(async () => {
+        sinon.stub(SalesService, "getSalesById").resolves(null);
+      });
+
+      after(async () => SalesService.getSalesById.restore());
+
+      it("produto não existe => retorna um objeto com as chaves code e message", async () => {
+        const response = await SalesService.deleteSales(1);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "message");
+        expect(response.code).to.be.equal(404);
+        expect(response.message).to.be.equal("Sale not found");
+      });
+    });
+
+    describe("caso de sucesso", () => {
+      const payload = {
+        code: 204,
+        data: { id: 1 },
+      };
+      before(async () => {
+        sinon.stub(SalesModel, "getSalesById").resolves(true);
+        sinon.stub(SalesModel, "deleteSales").resolves({});
+      });
+
+      after(async () => {
+        SalesModel.getSalesById.restore();
+        SalesModel.deleteSales.restore();
+      });
+
+      it("o produto é deletado", async () => {
+        const response = await SalesService.deleteSales(1);
+        expect(response).to.be.a("object");
+        expect(response).to.include.all.keys("code", "data");
+        expect(response.code).to.be.equal(payload.code);
+        expect(response.data.id).to.be.equal(1);
+      });
+    });
+  });
 });
 

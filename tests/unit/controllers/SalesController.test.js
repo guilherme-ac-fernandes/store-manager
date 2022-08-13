@@ -185,4 +185,53 @@ describe("Testes no SalesController", () => {
       });
     });
   });
+
+  describe("5. Deleta uma venda", () => {
+    describe("caso de falha", () => {
+      const request = {};
+      const response = {};
+      let next = () => {};
+      const payload = { code: 404, message: "Sale not found" };
+
+      before(async () => {
+        request.params = { id: 1 };
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        next = sinon.stub().returns();
+        sinon.stub(SalesService, "deleteSales").resolves(payload);
+      });
+
+      after(async () => SalesService.deleteSales.restore());
+
+      it("é utilizado o next para mandar um erro com code e message", async () => {
+        await SalesController.deleteSales(request, response, next);
+        expect(next.calledWith(payload)).to.be.true;
+      });
+    });
+
+    describe("caso de sucesso", () => {
+      const request = {};
+      const response = {};
+      let next = () => {};
+      const payload = {
+        code: 204,
+        data: { id: 1 },
+      };
+
+      before(async () => {
+        request.params = { id: 1 };
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        next = sinon.stub().returns();
+        sinon.stub(SalesService, "deleteSales").resolves(payload);
+      });
+
+      after(async () => SalesService.deleteSales.restore());
+
+      it("é chamado o status com o código 204", async () => {
+        await SalesController.deleteSales(request, response, next);
+        expect(response.status.calledWith(payload.code)).to.be.true;
+      });
+    });
+  });
 });
