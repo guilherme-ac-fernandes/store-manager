@@ -2,7 +2,7 @@ const SalesModel = require('../models/SalesModel');
 const {
   validateQuantityAndProduct,
   validateIfSaleExists,
-} = require('./validations');
+} = require('./validation-join');
 
 const createSaleProduct = async (itemsSold) => {
   const validation = await validateQuantityAndProduct(itemsSold);

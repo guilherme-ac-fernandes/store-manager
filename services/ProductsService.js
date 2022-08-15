@@ -2,7 +2,7 @@ const ProductsModel = require('../models/ProductsModel');
 const {
   validateName,
   validateIfProductExists,
-} = require('./validations');
+} = require('./validation-join');
 
 const getAllProduct = async () => {
   const products = await ProductsModel.getAllProduct();
