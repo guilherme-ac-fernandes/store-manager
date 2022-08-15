@@ -20,8 +20,9 @@ const productIdSchema = Joi.number().min(1).required().messages({
   'any.required': '400|"productId" is required',
 });
 
-const validateName = (name) => {
-  const { error } = nameSchema.validate(name);
+// Função genérica para validações
+const handleCallback = (schema, variable) => {
+  const { error } = schema.validate(variable);
   if (error !== undefined) {
     const [code, message] = error.message.split('|');
     return { code: Number(code), message };
@@ -29,23 +30,10 @@ const validateName = (name) => {
   return true;
 };
 
-const validateQuantity = (quantity) => {
-  const { error } = quantitySchema.validate(quantity);
-  if (error !== undefined) {
-    const [code, message] = error.message.split('|');
-    return { code: Number(code), message };
-  }
-  return true;
-};
-
-const validateProductId = (productId) => {
-  const { error } = productIdSchema.validate(productId);
-  if (error !== undefined) {
-    const [code, message] = error.message.split('|');
-    return { code: Number(code), message };
-  }
-  return true;
-};
+const validateName = (name) => handleCallback(nameSchema, name);
+const validateQuantity = (quantity) => handleCallback(quantitySchema, quantity);
+const validateProductId = (productId) =>
+  handleCallback(productIdSchema, productId);
 
 const validateIfProductExists = async (productId) => {
   const product = await ProductsModel.getProductById(productId);
