@@ -2,6 +2,11 @@ const Joi = require('joi');
 const ProductsModel = require('../models/ProductsModel');
 const SalesModel = require('../models/SalesModel');
 
+// Aplicação das validações com Joi utilizando mensagens especificas baseadas na monitoria de Joi
+// realizada pelo instrutor MD da turma 20 (Tribo A), juntamente com a lógica de tratamento da
+// mensagem e código presente no vídeo postado pelo instrutor Henrique Baêta da turma 20 (tribo B)
+// source 1: https://trybecourse.slack.com/archives/C02TH6V3MC5/p1660081203236509
+// source 2: https://trybecourse.slack.com/archives/C02TH6V3MC5/p1660324725698589
 const nameSchema = Joi.string().min(5).required().messages({
   'string.empty': '400|"name" is required',
   'string.min': '422|"name" length must be at least {#limit} characters long',
@@ -52,7 +57,7 @@ const validateIfSaleExists = async (saleId) => {
 // source1: https://www.30secondsofcode.org/articles/s/javascript-async-array-loops
 // source2: https://stackoverflow.com/questions/69346491/how-do-i-use-array-each-with-async-await
 const validateQuantityAndProduct = async (itemsSold) => Promise
-.all(itemsSold.map(async ({ quantity, productId }) => {
+  .all(itemsSold.map(async ({ quantity, productId }) => {
   const response1 = validateQuantity(quantity);
   if (response1 !== true) return response1;
   const response2 = validateProductId(productId);
