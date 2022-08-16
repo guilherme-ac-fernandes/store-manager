@@ -15,6 +15,7 @@ Consiste em uma API constrída para o gerenciamento de um e-commerce de produtos
 ```
 docker-compose up -d
 docker attach store_manager
+npm install // para instalar as dependências
 npm run migration // comando para criar o banco de dados
 npm run seed // comando para popular o banco de dados
 ```
