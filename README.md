@@ -1,4 +1,4 @@
-# Store Manager
+# Store Manager 📦
 
 Consiste em uma API constrída para o gerenciamento de um e-commerce de produtos, com a possibilidade de criar, visualizar, deletar e atualizar produtos e vendas. 
 
@@ -30,25 +30,35 @@ npm run test:mocha // para executar os testes
 ### Endpoints
 
 #### Produtos
-- GET - http://localhost:3000/products
-- GET - http://localhost:3000/products/:id
-- GET - http://localhost:3000/products/search?q=name
-- PUT - http://localhost:3000/products/:id
-- POST - http://localhost:3000/products
-- DELETE - http://localhost:3000/products/:id
+
+| Método | URL |
+|---|---|
+| `GET` | http://localhost:3000/products |
+| `GET` | http://localhost:3000/products/:id |
+| `GET` | http://localhost:3000/products/search?q=name |
+| `PUT` | http://localhost:3000/products/:id |
+| `POST` | http://localhost:3000/products |
+| `DELETE` | http://localhost:3000/products/:id |
+
 
 Na requisição do PUT e POST, é necessária o seguinte JSON:
 
 ```
-{ "name": "Produto ABC" }
+{ 
+  "name": "Produto ABC"
+}
 ```
 
 #### Vendas
-- GET - http://localhost:3000/sales
-- GET - http://localhost:3000/sales/:id
-- PUT - http://localhost:3000/sales/:id
-- POST - http://localhost:3000/sales
-- DELETE - http://localhost:3000/sales/:id
+
+| Método | URL |
+|---|---|
+| `GET` | http://localhost:3000/sales |
+| `GET` | http://localhost:3000/sales/:id |
+| `PUT` | http://localhost:3000/sales/:id |
+| `POST` | http://localhost:3000/sales |
+| `DELETE` | http://localhost:3000/sales/:id |
+
 
 Na requisição do PUT e POST, é informar a quantidade e o id do produto no formato a seguir:
 
