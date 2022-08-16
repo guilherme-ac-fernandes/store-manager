@@ -42,7 +42,7 @@ npm run test:mocha // para executar os testes
 | `DELETE` | http://localhost:3000/products/:id |
 
 
-Na requisição do PUT e POST, é necessária o seguinte JSON:
+Na requisição do PUT e POST, é necessário informar o seguinte JSON:
 
 ```
 { 
@@ -61,7 +61,7 @@ Na requisição do PUT e POST, é necessária o seguinte JSON:
 | `DELETE` | http://localhost:3000/sales/:id |
 
 
-Na requisição do PUT e POST, é informar a quantidade e o id do produto no formato a seguir:
+Na requisição do PUT e POST, é necessário informar a quantidade e o id do produto no formato a seguir:
 
 ```
 [
