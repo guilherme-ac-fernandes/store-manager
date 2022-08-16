@@ -65,7 +65,13 @@ Na requisição do PUT e POST, é necessário informar a quantidade e o id do pr
 
 ```
 [
-  {"productId": 1, "quantity": 2 }, 
-  {"productId": 8, "quantity": 28 }
+  {
+    "productId": 1,
+    "quantity": 2
+  }, 
+  { 
+    "productId": 8,
+    "quantity": 28
+  }
 ]
 ```
