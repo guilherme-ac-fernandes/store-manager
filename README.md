@@ -11,13 +11,12 @@ Consiste em uma API constrída para o gerenciamento de um e-commerce de produtos
 ### Instruções
 
 - Para rodar o repositório localmente, realize o clone do projeto e utilize os comandos a seguir para inicializar o Docker:
+Observação: crie e popule o banco de dados, o `schema` está presente nos arquivos `migration.sql` e `seed.sql`, respectivamente.
 
 ```
 docker-compose up -d
 docker attach store_manager
 npm install // para instalar as dependências
-npm run migration // comando para criar o banco de dados
-npm run seed // comando para popular o banco de dados
 ```
 
 E utilize os comandos a seguir para executar a aplicação:
