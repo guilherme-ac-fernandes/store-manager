@@ -11,7 +11,8 @@ Consiste em uma API constrída para o gerenciamento de um e-commerce de produtos
 ### Instruções
 
 - Para rodar o repositório localmente, realize o clone do projeto e utilize os comandos a seguir para inicializar o Docker:
-Observação: crie e popule o banco de dados, o `schema` está presente nos arquivos `migration.sql` e `seed.sql`, respectivamente.
+
+> Observação: crie e popule o banco de dados, o `schema` está presente nos arquivos `migration.sql` e `seed.sql`, respectivamente.
 
 ```
 docker-compose up -d
