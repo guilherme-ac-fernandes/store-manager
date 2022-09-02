@@ -32,14 +32,14 @@ npm run test:mocha // para executar os testes
 
 #### Produtos
 
-| Método | URL |
-|---|---|
-| `GET` | http://localhost:3000/products |
-| `GET` | http://localhost:3000/products/:id |
-| `GET` | http://localhost:3000/products/search?q=name |
-| `PUT` | http://localhost:3000/products/:id |
-| `POST` | http://localhost:3000/products |
-| `DELETE` | http://localhost:3000/products/:id |
+| Método | Funcionalidade | URL |
+|---|---|---|
+| `GET` | Retorna uma lista com todos os produtos | http://localhost:3000/products |
+| `GET` | Retorna um produto específico | http://localhost:3000/products/:id |
+| `GET` | Filtra pelo nome dos produtos em relação os caracteres passada como query | http://localhost:3000/products/search?q=name |
+| `PUT` | Altera o nome de um produto específico | http://localhost:3000/products/:id |
+| `POST` | Cria um novo produto | http://localhost:3000/products |
+| `DELETE` | Deleta um produto específico | http://localhost:3000/products/:id |
 
 
 Na requisição do PUT e POST, é necessário informar o seguinte JSON:
@@ -52,13 +52,13 @@ Na requisição do PUT e POST, é necessário informar o seguinte JSON:
 
 #### Vendas
 
-| Método | URL |
-|---|---|
-| `GET` | http://localhost:3000/sales |
-| `GET` | http://localhost:3000/sales/:id |
-| `PUT` | http://localhost:3000/sales/:id |
-| `POST` | http://localhost:3000/sales |
-| `DELETE` | http://localhost:3000/sales/:id |
+| Método | Funcionalidade | URL |
+|---|---|---|
+| `GET` | Retorna uma lista com todos as vendas | http://localhost:3000/sales |
+| `GET` | Retorna uma venda específica | http://localhost:3000/sales/:id |
+| `PUT` | Altera os dados de uma venda específica | http://localhost:3000/sales/:id |
+| `POST` | Valida e cadastra uma nova venda | http://localhost:3000/sales |
+| `DELETE` | Deleta uma venda específica | http://localhost:3000/sales/:id |
 
 
 Na requisição do PUT e POST, é necessário informar a quantidade e o id do produto no formato a seguir:
