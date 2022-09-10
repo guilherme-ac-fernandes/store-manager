@@ -1,6 +1,6 @@
 # Store Manager 📦
 
-Consiste em uma API constrída para o gerenciamento de um e-commerce de produtos, com a possibilidade de criar, visualizar, deletar e atualizar produtos e vendas. 
+Consiste em uma API construída para o gerenciamento de um e-commerce de produtos, com a possibilidade de criar, visualizar, deletar e atualizar produtos e vendas. 
 
 * Contruída com Node.js, Express, MySQL e Docker
 * Utilizando as práticas do REST
