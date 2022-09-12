@@ -18,6 +18,7 @@ Consiste em uma API construída para o gerenciamento de um e-commerce de produto
 docker-compose up -d
 docker attach store_manager
 npm install // para instalar as dependências
+docker-compose down // para parar completamente a aplicação
 ```
 
 E utilize os comandos a seguir para executar a aplicação:
