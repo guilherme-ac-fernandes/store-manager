@@ -2,10 +2,10 @@
 
 Consiste em uma API construída para o gerenciamento de um e-commerce de produtos, com a possibilidade de criar, visualizar, deletar e atualizar produtos e vendas. 
 
-* Contruída com Node.js, Express, MySQL e Docker
+* Construída com Node.js, Express, MySQL e Docker
 * Utilizando as práticas do REST
 * Testes realizados com Mocha, Chai e Sinnon
-* Aplicada Arquitetura de Software, com as camadas de Modelo, Serviço e de Controladores
+* Aplicada Arquitetura de Software, com as camadas de Modelo, de Serviço e de Controladores
 
 
 ### Instruções
