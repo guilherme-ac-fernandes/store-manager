@@ -1,4 +1,4 @@
-# Projeto Store Manager 📦
+# Projeto Store Manager 📦📦
 
 Consiste em uma API construída para o gerenciamento de um e-commerce de produtos, com a possibilidade de criar, visualizar, deletar e atualizar produtos e vendas. 
 
